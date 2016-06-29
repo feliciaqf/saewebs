@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="datetimpicker.css"/>
+	</head>
+	<body>
+		<input type="text" id="dp"/>
+		<input type="text" id="dp1" />
+		<div id="div"></div>
+		<!--<iframe src="demo_frame.html" width="700" height="470" frameborder="0"></iframe>-->
+		<script type="text/javascript" src="datetimepicker.js" ></script>
+		<script>
+			var dp = document.getElementById("dp");
+			var dp1 = document.getElementById("dp1");
+			var div = document.getElementById("div");
+
+			dp.addEventListener('click',function(){
+				datetimePicker({
+					doubleCalendar:true,
+					dateFmt:'yyyy-MM-dd HH:mm:ss',
+					lang:'zh-cn',
+					isShowOK:false,
+                    disabledDays:[0,6]
+				});
+			})
+			dp1.addEventListener('click',function(){
+				datetimePicker({
+					dateFmt:'yyyy-MM-dd HH:mm:ss',
+					lang:'zh-cn'
+				});
+			})
+		</script>
+	</body>
+</html>
