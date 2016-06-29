@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>poolScore</title>
+</head>
+<body style="background-color:#ccc;">
+  <div style="width:400px;height:400px;" id="demo"></div>
+  <input id="data"value="100"> <button id="submit">确定</button>
+  <script src="jquery.min.js"></script>
+  <script src="p.js" ></script>
+  <script>
+      var opt = {
+        grid:{
+          x:20,y:20,x2:20,y2:10
+        },
+        markLine:{
+            splitText:false
+        },
+        bubbles:{
+          num:20,
+          animation:true,
+          animationDuration:500
+        },
+        lfbar:{
+            lineWidth:20,
+            strokeStyle:'#333',
+            lineLength:40
+        },
+
+        rtbar:{
+            lineWidth:20,
+            strokeStyle:'#333',
+            lineLength:40,
+        },
+
+        lfside:{
+            lineWidth:10,
+            strokeStyle:'#333'
+        },
+
+        rtside:{
+            lineWidth:10,
+            strokeStyle:'#333'
+        },
+        btside:{
+            lineWidth:10,
+            strokeStyle:'#333'
+        },
+        markLine:{
+            splitText:false
+        },
+        data:{
+          data:
+            [
+                  {
+                      value:$.trim($("#data").val()),
+                      time:'12:30',
+                      wave:{
+                        fillStyle:['Linear',[0,0,290,0],[0, '#bfe6fa'],[0.5, '#67b9ff'], [1, '#bfe6fa']]
+                      }
+                  }
+              ]
+          
+        }
+      }
+      $("#submit").click(function(){
+        opt = {
+          grid:{
+            x:20,y:20,x2:20,y2:10
+          },
+          markLine:{
+              splitText:false
+          },
+          bubbles:{
+            num:20,
+            animation:true,
+            animationDuration:500
+          },
+          lfbar:{
+              lineWidth:20,
+              strokeStyle:'#333',
+              lineLength:40
+          },
+
+          rtbar:{
+              lineWidth:20,
+              strokeStyle:'#333',
+              lineLength:40,
+          },
+
+          lfside:{
+              lineWidth:10,
+              strokeStyle:'#333'
+          },
+
+          rtside:{
+              lineWidth:10,
+              strokeStyle:'#333'
+          },
+          btside:{
+              lineWidth:10,
+              strokeStyle:'#333'
+          },
+          markLine:{
+              splitText:false
+          },
+          data:{
+            data:
+              [
+                    {
+                        value:$.trim($("#data").val()),
+                        time:'12:30',
+                        wave:{
+                          // noise:0,
+                          fillStyle:['Linear',[0,0,290,0],[0, '#bfe6fa'],[0.5, '#67b9ff'], [1, '#bfe6fa']]
+                        }
+                    }
+                ]
+            
+          }
+        }
+      $('#demo').pool(opt);
+      })
+      $('#demo').pool(opt);
+  </script>
+</body>
+</html>
