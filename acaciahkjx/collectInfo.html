@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>回馈家乡相关信息采集</title>
+    <meta name="renderer" content="webkit" /> 
+    <meta name="format-detection" content="telephone=no" /> 
+    <meta name="description" content="回馈家乡队员相关信息采集" /> 
+    <meta name="author" content="Felicia Qin" /> 
+    <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge" /> 
+    <meta name="apple-mobile-web-app-capable" content="yes" /> 
+    <meta name="mobile-web-app-capable" content="yes" /> 
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" /> 
+    <meta name="apple-mobile-web-app-title" content="回馈家乡相关信息采集" /> 
+    <style>
+    body,form,div,label{padding: 0;margin:0;font-size:14px; }
+    .row,.controls{padding-top:5px;padding-bottom: 5px;}
+    .row label{display:inline-block;*zoom:1;width:11em;text-align: right;margin-right: 10px;}
+    .controls {text-indent: 11em;}
+    </style>
+
+</head>
+<body>
+	<form action="utils/collectInfo.php" method="post" id="searchForm">
+		查询：<br/>
+		<div class="row">
+            <label for="">姓名:</label>
+            <input type="text" name="sname" id="sname">
+			
+			<label for="">活动县:</label>
+            <select name="stown" id="stown">
+				<option value="">请选择</option>
+            </select>
+			
+			<input type="submit" value="查询">
+			<input type="hidden" name="type" value="findUser"/>
+			
+			<div id="searchResult"></div>
+        </div>
+	</form>
+	<hr/>
+    <form action="utils/collectInfo.php" method="post" id="infoForm">
+        <!-- <div class="row">
+            <label for="">序号:</label>
+            <span id="seq">1</span>
+        </div> -->
+		<input type="hidden" name="type" value="userInfo"/>
+        <div class="row">
+            <label for="">姓名:</label>
+            <input type="text" name="name">
+        </div>
+        <div class="row">
+            <label for="">性别:</label>
+            <input type="radio" name="sex">男
+            <input type="radio" name="sex">女    
+        </div>
+        <div class="row">
+            <label for="">年级（大学入学年份）:</label>
+            <input type="text" name="grade">
+        </div>
+        <div class="row">
+            <label for="">活动县:</label>
+            <select name="town" id="town">
+				<option value="">请选择</option>
+            </select>
+        </div>
+        <div class="row">
+            <label for="">在读/毕业大学及专业:</label>
+            <input type="text" name="colloege">
+        </div>
+        <div class="row">
+            <label for="">参加活动年度:</label>
+            <input type="checkbox" value="2009" name="years">2009年
+            <input type="checkbox" value="2010" name="years">2010年
+            <input type="checkbox" value="2011" name="years">2011年
+            <input type="checkbox" value="2012" name="years">2012年
+            <input type="checkbox" value="2013" name="years">2013年
+            <input type="checkbox" value="2014" name="years">2014年
+            <input type="checkbox" value="2015" name="years">2015年
+        </div>
+        <div class="row">
+            <label for="">QQ:</label>
+            <input type="text" name="qq">
+        </div>
+        <div class="row">
+            <label for="">联系电话:</label>
+            <input type="text" name="tel">
+        </div>
+        <div class="row">
+            <label for="">现工作地及单位:</label>
+            <input type="text" name="company">
+        </div>
+        <div class="row">
+            <label for="">现工作职位:</label>
+            <input type="text" name="job">
+        </div>
+        <div class="controls">
+            <input type="submit" value="提交">
+        </div>
+    </form>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript">
+	$(function(){
+		$.ajax({
+			url:'utils/collectInfo.php',
+			data:{
+				type:'commonInfo'
+			},
+			dataType:'json',
+			success:function(data){
+				if($('#town').children().length<=1){
+					var  html ="";
+					for(var i=0;i<data.length;i++){
+						html += '<option value="'+data[i].id+'">'+ data[i].name+'</option>';
+					}
+					$('#town').append(html);
+					$('#stown').append(html);
+				}
+			},
+			error:function(data){
+				alert('e'+data);
+			}
+		})
+		$("#searchForm").on('submit',function(e){
+			e.preventDefault();
+			$("#searchResult").html('');
+			
+			//校验
+			$.ajax({
+				url:'utils/collectInfo.php',
+				data:{
+					type:'findUser',
+					name:$.trim($("#sname").val()),
+					townid:$.trim($("#stown").val())
+				},
+				dataType:'json',
+				success:function(data){
+					// alert(data);
+					var  html ="";
+					// alert(data.length)
+					for(var i=0;i<data.length;i++){
+						html += '<a href="#" data-set="'+data[i]+'">'+ data[i].name+'</a>&nbsp;&nbsp;&nbsp;&nbsp;';
+					}
+					$("#searchResult").html(html);
+				},
+				error:function(data){
+					alert('e'+data);
+				}
+			})
+			// $("#infoForm").submit();
+		})
+		$("#searchResult").on('click','a',function(){
+			var data = $(this).attr('data-set');
+			$('#infoForm [name]').each(function(){
+				var  name = $(this).attr('name');
+				alert(name);
+				this.value = data[name];
+			})
+		})
+		$("#infoForm").on('submit',function(e){
+			e.preventDefault();
+			//校验
+
+			$("#infoForm").submit();
+		})
+	})
+    
+    </script>
+</body>
+</html>
