@@ -1,0 +1,103 @@
+-- phpMyAdmin SQL Dump
+-- version 3.4.10.1
+-- http://www.phpmyadmin.net
+--
+-- 主机: localhost
+-- 生成日期: 2015 年 10 月 07 日 12:18
+-- 服务器版本: 5.5.20
+-- PHP 版本: 5.3.10
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- 数据库: `acaciahkjx`
+--
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `h_activity_area`
+--
+
+CREATE TABLE IF NOT EXISTS `h_activity_area` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `townid` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '活动县id',
+  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '县名',
+  `cndesc` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '中文描述',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `name` (`name`),
+  UNIQUE KEY `townid` (`townid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='活动区域表' AUTO_INCREMENT=9 ;
+
+--
+-- 转存表中的数据 `h_activity_area`
+--
+
+INSERT INTO `h_activity_area` (`id`, `townid`, `name`, `cndesc`) VALUES
+(1, '01', 'yangshuo', '阳朔'),
+(2, '02', 'lingchuan', '灵川'),
+(3, '03', 'gongcheng', '恭城'),
+(4, '04', 'ziyuan', '资源'),
+(5, '05', 'rongshui', '融水'),
+(6, '06', 'longsheng', '龙胜'),
+(7, '07', 'guanyang', '灌阳'),
+(8, '08', 'wuxuan', '武宣');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `h_user`
+--
+
+CREATE TABLE IF NOT EXISTS `h_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `userid` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '用户编号，可空志愿者才有编号',
+  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '姓名',
+  `sex` varchar(2) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '性别',
+  `grade` varchar(4) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '年级，4位，如2011',
+  `college` varchar(200) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '大学及专业',
+  `years` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '参加年限，逗号分隔',
+  `qq` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT 'QQ',
+  `tel` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '电话',
+  `company` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '现工作单位',
+  `job` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '现工作职务',
+  `idcard` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '身份证',
+  `townid` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '活动县',
+  `photopath` varchar(200) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '照片路径',
+  `is_effect` tinyint(1) NOT NULL DEFAULT '0' COMMENT '报名是否有效，1有效，0无效',
+  `create_date` date DEFAULT NULL COMMENT '创建时间，报名时间',
+  `update_date` date DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`),
+  KEY `townid` (`townid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='用户信息表' AUTO_INCREMENT=4 ;
+
+--
+-- 转存表中的数据 `h_user`
+--
+
+INSERT INTO `h_user` (`id`, `userid`, `name`, `sex`, `grade`, `college`, `years`, `qq`, `tel`, `company`, `job`, `idcard`, `townid`, `photopath`, `is_effect`, `create_date`, `update_date`) VALUES
+(1, '0001', '张三', '男', '2011', 'qqq', 'xxx', 'ddd', 'ddd', 'ddd', 'ddd', 'ddd', '01', NULL, 1, '2015-10-01', '2015-10-01'),
+(2, '002', '张三', '男', '2012', 'ddd', '2011', NULL, NULL, '111', NULL, NULL, '04', NULL, 1, '2015-10-01', NULL),
+(3, '003', '李四', '男', '2011', '事实上', '2011,2012', NULL, NULL, NULL, NULL, NULL, '03', NULL, 1, '2015-10-01', NULL);
+
+--
+-- 限制导出的表
+--
+
+--
+-- 限制表 `h_user`
+--
+ALTER TABLE `h_user`
+  ADD CONSTRAINT `h_user_ibfk_1` FOREIGN KEY (`townid`) REFERENCES `h_activity_area` (`townid`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

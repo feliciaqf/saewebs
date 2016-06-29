@@ -1,0 +1,59 @@
+-- phpMyAdmin SQL Dump
+-- version 4.1.6
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Generation Time: 2015-09-10 11:53:51
+-- 服务器版本： 5.6.16
+-- PHP Version: 5.5.9
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Database: `acaciahkjx`
+--
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `h_activity_area`
+--
+-- 创建时间： 2015-09-10 06:19:30
+--
+
+DROP TABLE IF EXISTS `h_activity_area`;
+CREATE TABLE IF NOT EXISTS `h_activity_area` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `townid` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '活动县id',
+  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '县名',
+  `cndesc` varchar(100) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '中文描述',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`),
+  UNIQUE KEY `townid` (`townid`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COMMENT='活动区域表' AUTO_INCREMENT=13 ;
+
+--
+-- 转存表中的数据 `h_activity_area`
+--
+
+INSERT INTO `h_activity_area` (`id`, `townid`, `name`, `cndesc`) VALUES
+(1, '1', 'yangshuo', '阳朔'),
+(2, '2', 'lingchuan', '灵川'),
+(3, '3', 'gongcheng', '恭城'),
+(5, '4', 'ziyuan', '资源'),
+(6, '5', 'rongshui', '融水'),
+(7, '9', 'longsheng', '龙胜'),
+(8, '7', 'guanyang', '灌阳'),
+(9, '8', 'wuxuan', '武宣');
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
