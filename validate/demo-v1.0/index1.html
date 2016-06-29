@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css.css"/>
+	</head>
+	<body>
+		<h3><span>Example</span></h3>
+
+	    <div class="success_box" id="success_box">All of the fields were successfully validated!</div>
+	    <div class="error_box" id="error_box"></div>
+	
+	    <form name="example_form" action="#" method="POST">
+	        <label for="req">Required field:</label>
+	        <input name="req" id="req" />
+	        <br/>
+	        <label for="alphanumeric">Alphanumeric field:</label>
+	        <input name="alphanumeric" id="alphanumeric" />
+			<br/>
+	        <label for="password">Password:</label>
+	        <input name="password" id="password" type="password" />
+			<br/>
+	        <label for="password_confirm">Password Confirmation (match password):</label>
+	        <input name="password_confirm" id="password_confirm" type="password" />
+			<br/>
+	        <label for="email">Email:</label>
+	        <input name="email" id="email" />
+			<br/>
+	        <label for="minlength">Min length field (min. 8 chars):</label>
+	        <input name="minlength" id="minlength" />
+			<br/>
+			<label for="hobby">hobby</label>
+	        <select name="hobby" id="hobby">
+	        	<option value="">please select</option>
+	        	<option value="1">Swimming</option>
+	        	<option value="2">Basketball</option>
+	        </select>
+			<br/>
+			
+			<label for="preffer">preffer</label>
+	        <select name="preffer" id="preffer" multiple="multiple">
+	        	<option value="">please select</option>
+	        	<option value="1">Swimming</option>
+	        	<option value="2">Basketball</option>
+	        	<option value="3">football</option>
+	        </select>
+			<br/>
+			
+	        <label for="tos_checkbox">Required checkbox (example: Terms of Service)</label><br/>
+	        <input name="tos_checkbox" id="tos_checkbox" type="checkbox" value="0"/>0
+	        <input name="tos_checkbox" id="tos_checkbox1" type="checkbox" value="1"/>1
+	        <input name="tos_checkbox" id="tos_checkbox2" type="checkbox" value="2"/>2
+	        <br/>
+	        
+	        <label for="tos_radio">Required checkbox (example: Terms of Service)</label><br/>
+	        <input name="tos_radio" id="tos_radio" type="radio" value="0"/>0
+	        <input name="tos_radio" id="tos_radio1" type="radio" value="1"/>1
+	        <br/>
+	        <button class="button gray" type="submit" name="submit">Submit</button>
+	    </form>
+	    <script src="validate1.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+		var formConfig = {
+			req:{
+				display: 'required',
+			    rules: 'required'
+			},
+			alphanumeric:{
+				rules: 'required|alpha_numeric'
+			},
+			password:{
+				rules: 'required|min_length[8]',
+			    required:'密码不能为空！',
+			    errorMsg:'密码格式错误！'
+			},
+			password_confirm:{
+				display: 'password confirmation',
+			    rules: 'required|matches[password]'
+			},
+			email:{
+				rules: 'required|valid_email'
+			},
+			minlength:{
+				display: 'min length',
+			    rules: 'required|min_length[8]'
+			},
+			tos_checkbox:{
+				display: 'terms of service',
+			    rules: 'required',
+			    check:function(field){
+					var checkedCnt = 0,
+						el = field.element;
+					
+					for(var i=0,l= el.length;i<l;i++){
+						if(el[i].checked){
+							checkedCnt +=1;
+						}
+					}
+					if(checkedCnt<2){
+						return false;
+					}
+					return true;
+				},
+			    required:'请选择项目！',
+			    errorMsg:'请至少选择两项！'
+			},
+			tos_radio:{
+				rules:'required'
+			},
+			hobby:{
+				display:"爱好",
+				rules:'required',
+				required:'请选择爱好！'
+			},
+			preffer:{
+				display:"爱好",
+				rules:'required',
+				required:'请选择更喜欢的项目！',
+				check:function(field){
+					var selCnt = 0,
+						el = field.element;
+					
+					for(var i=0,l= el.length;i<l;i++){
+						if(el[i].selected){
+							selCnt +=1;
+						}
+					}
+					if(selCnt<2){
+						return false;
+					}
+					return true;
+				},
+				errorMsg:'请至少选择两项！'
+			}
+		};
+		var callback = function(errors, evt){
+			var tmpDiv = document.createElement('div'),
+				hasErr = false,
+				key,
+				node = evt.target;
+				
+			if(node.tagName.toLowerCase() == 'form'){
+				for(key in errors){
+					if(errors.hasOwnProperty(key)){
+						var element = this.form[key];
+						insertWrongTip(element,this.form);
+						hasErr = true;
+					}
+				}
+				if(!hasErr){
+					for(key in formConfig){
+						var element = this.form[key];
+						insertRightTip(element,this.form);
+					}
+				}
+			}else{
+				key = node.name;
+				if(typeof errors[key] != 'undefined'){
+					insertWrongTip(node,this.form);
+				}else{
+					insertRightTip(node,this.form);
+				}
+			}
+			
+			function removeTip(node,form){
+				var rnode = node.nextSibling;
+				while(rnode){
+					if(rnode.nodeType == 1 && rnode.tagName.toLowerCase() === 'label'){
+						break;
+					}else if(rnode.nodeType == 1  && rnode.tagName.toLowerCase() === 'span'){
+						if(rnode.className && rnode.className.indexOf('tip') != -1){
+							form.removeChild(rnode);
+							break;
+						}
+					}
+					rnode = rnode.nextSibling;
+					
+				}
+			}
+			
+			function insertWrongTip(node,form){
+				if(node.length){
+					if(node[0].tagName !== 'OPTION'){
+						node = node[node.length-1];
+					}
+				}
+				var wrongHTML = '<span class="tip wrong">x<span class="tipdesc">'+errors[key].messages.join()+'</span></span>';
+				removeTip(node,form);
+				tmpDiv.innerHTML = wrongHTML;
+				form.insertBefore(tmpDiv.firstChild,node.nextSibling);
+			}
+			
+			function insertRightTip(node,form){
+				if(node.length){
+					if(node[0].tagName !== 'OPTION'){
+						node = node[node.length-1];
+					}
+				}
+				var rightHTML = '<span class="tip right">√</span>';
+				removeTip(node,form);
+				tmpDiv.innerHTML = rightHTML;
+				form.insertBefore(tmpDiv.firstChild,node.nextSibling);
+			}
+		};
+		
+		function $(a){
+			return document.getElementById(a);
+		}
+		document.forms['example_form'].debug = true;
+		$("req").onblur = $('alphanumeric').onblur = $('password').onblur = $('password_confirm').onblur = $('email').onblur = $('minlength').onblur = $('hobby').onblur= $('preffer').onblur= function(){
+			var name = this.name,
+				config = {};
+			config[name] = formConfig[name];
+			return formValidate('example_form',config,callback) && !document.forms['example_form'].debug;
+		}
+		document.forms['example_form'].onsubmit = function(){
+			return formValidate(this, formConfig, callback) && !this.debug;
+		}
+		
+		
+		</script>
+	</body>
+</html>
