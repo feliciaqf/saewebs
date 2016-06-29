@@ -1,0 +1,17 @@
+  	<script type='text/javascript'>var heatdata_uid = 'TpDXilDAt1Mt';</script><script src="http://heatdata.com/heatdata.js" defer="defer"></script>
+    
+    
+    <script type="text/javascript">
+	        var bu = [ "https://gbd.pa18.com/pabrain","https://test-gbd.pa18.com:42443/pabrain","http://127.0.0.1/pabrain"], 
+	            config_ = {
+	            dom: ['.page:not(#loading)'],
+	            time:5,
+	            pluginID: 'PA01300000000_01_CZYH',
+	            refer:1 
+	            };
+	        (function(){
+		        var f = document.createElement('script'); f.type = 'text/javascript'; f.src = bu[parseInt(config_.refer) || 0] + '/face/js/pahm.js'; 
+		        var s = document.getElementsByTagName('script')[0];
+		        s.parentNode.insertBefore(f, s);
+	        })();
+		</script>
