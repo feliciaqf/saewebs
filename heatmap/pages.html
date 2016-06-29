@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,minimal-ui">
+	<title>Document</title>
+</head>
+<body style="margin:0;">
+	<div id="page">
+		<div id="page1" style="padding-top:700px;width:100%;height:2800px;background:grey;">
+			<button id="btn1">to page2</button>
+		</div>
+		<div id="page2" style="display:none;padding-top:500px;width:100%;height:1800px;background:green;">
+			<button id="btn2">to page1</button>
+		</div>
+	</div>
+	<script>
+		// window.addEventListener('load',function(){
+		// },false);
+			var page1 = document.getElementById('page1'),
+				page2 = document.getElementById('page2'),
+				btn1 = document.getElementById('btn1'),
+				btn2 = document.getElementById('btn2');
+			btn1.addEventListener('click', function(e){
+				window.location.hash = 'page2';
+				page2.style.display = 'block';
+				page1.style.display = 'none';
+			},false)
+			btn2.addEventListener('click', function(e){
+				window.location.hash = 'page1';
+				page1.style.display = 'block';
+				page2.style.display = 'none';
+			},false)
+			document.body.addEventListener('click',function(e){
+				console.log("x:"+ e.pageX +",y:"+e.pageY);
+			},false)
+	</script>
+	<script src="http://1.feliciaqin.sinaapp.com/heatmap/pahm-v1.0.3.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

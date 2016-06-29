@@ -1,0 +1,8 @@
+//for debug
+(function(){
+	var s = document.createElement("script"),
+        bd = document.body;
+    
+    s.src = "http://192.168.37.128:8081/target/target-script-min.js#anonymous";
+    bd.appendChild(s,bd);
+})();
